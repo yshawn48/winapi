@@ -2,7 +2,7 @@ import ctypes
 
 from ctypes import wintypes
 
-import src.winapi.utils as utils
+from . import utils
 
 
 gdi32 = ctypes.windll.gdi32

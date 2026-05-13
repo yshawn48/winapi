@@ -1,3 +1,4 @@
-import src.winapi.base as base, src.winapi.utils as utils
+from . import base
+from . import utils
 
-from src.winapi.core import *
+from .core import *

@@ -13,8 +13,8 @@ import threading
 from PIL import Image
 from ctypes import wintypes
 
-import src.winapi.base as base
-import src.winapi.utils as utils
+from . import base
+from . import utils
 
 
 PRECISE_TIME = True
@@ -133,6 +133,9 @@ class VirtualKeyCodes():
                 case 4: modifier_code = 0x12
 
             return VirtualKeyCodePair(vk_code=(modifier_code, result & 0xFF))
+        
+        if keys is None:
+            return VirtualKeyCodes()
         
         keys = keys if isinstance(keys, list) else [keys]
         vk_codes = VirtualKeyCodes()
@@ -442,15 +445,16 @@ class Mouse():
 class Keyboard():
     @staticmethod
     def _keyboard_event(**kwargs):
-        input = utils.INPUT(type=ctypes.c_ulong(utils.INPUT_KEYBOARD))
-        input.ki = utils.KEYBDINPUT(
-            wVk=kwargs["virtual_key_code"],
-            wScan=0,
-            dwFlags=kwargs["event"],
-            time=0
-        )
+        if kwargs["virtual_key_code"] is not None:
+            input = utils.INPUT(type=ctypes.c_ulong(utils.INPUT_KEYBOARD))
+            input.ki = utils.KEYBDINPUT(
+                wVk=kwargs["virtual_key_code"],
+                wScan=0,
+                dwFlags=kwargs["event"],
+                time=0
+            )
 
-        base._SendInput(1, ctypes.byref(input), ctypes.sizeof(utils.INPUT))
+            base._SendInput(1, ctypes.byref(input), ctypes.sizeof(utils.INPUT))
 
 
     @staticmethod

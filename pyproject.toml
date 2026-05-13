@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "winapi"
+description = "A python library for Windows API."
+readme = "README.md"
+license = {text = "CC0 1.0 Universal"}
+authors = [
+    {name = "kaoshawn48"}
+]
+requires-python = ">=3.12"
+dependencies = [
+  "pillow==12.2.0"
+]
+dynamic = ["version"]
+
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python"
+]
